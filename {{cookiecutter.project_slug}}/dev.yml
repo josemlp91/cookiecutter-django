@@ -41,7 +41,7 @@ services:
 
   django:
     build:
-      context: .
+      context: 
       dockerfile: ./compose/django/Dockerfile-dev
     command: /start-dev.sh
     environment: 
