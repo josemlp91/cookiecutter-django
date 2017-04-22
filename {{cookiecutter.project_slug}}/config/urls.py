@@ -27,7 +27,8 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 {% if cookiecutter.use_swagger == 'y' %}
-urlpatterns += [url(r'^$', schema_view)]
+# Documetacion de la api
+urlpatterns += [url(r'^api-docs/$', schema_view)]
 {% endif %}
 
 
