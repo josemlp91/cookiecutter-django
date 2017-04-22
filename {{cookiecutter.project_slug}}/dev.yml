@@ -13,7 +13,6 @@ services:
       MYSQL_PASSWORD: dbpassword
       MYSQL_ROOT_PASSWORD: dbrootpassword
       MYSQL_DATABASE: dbdatabase
-      MYSQL_HOST: mysql
       MYSQL_PORT: 3306
     volumes_from:
       - datastore
@@ -38,6 +37,8 @@ services:
       context: .
       dockerfile: ./compose/django/Dockerfile-dev
     command: /start-dev.sh
+    environment:
+      MYSQL_HOST: mysql
     depends_on:
       - mysql{% if cookiecutter.use_mailhog == 'y' %}
       - mailhog{% endif %}
