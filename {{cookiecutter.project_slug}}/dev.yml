@@ -40,10 +40,13 @@ services:
       dockerfile: ./compose/django/Dockerfile-dev
     command: /start-dev.sh
     environment: {% if cookiecutter.use_mysql == 'y' %}
-      MYSQL_HOST: mysql {% endif %}
+      MYSQL_HOST: mysql {% endif %} {% if cookiecutter.use_postgres == 'y' %}
+      POSTGRES_USER: {{cookiecutter.project_slug}} {% endif %}
+
     env_file: env.dev
     depends_on: {% if cookiecutter.use_mysql == 'y' %}
-      - mysql {% endif %}
+      - mysql {% endif %} {% if cookiecutter.use_postgres == 'y' %}
+      - postgres {% endif %}
     links: {% if cookiecutter.use_mysql == 'y' %}
       - mysql  {% endif %}
     volumes:
