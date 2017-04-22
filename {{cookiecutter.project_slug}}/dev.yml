@@ -5,13 +5,31 @@ volumes:
   postgres_backup_dev: {}
 
 services:
-  postgres:
-    build: ./compose/postgres
-    volumes:
-      - postgres_data_dev:/var/lib/postgresql/data
-      - postgres_backup_dev:/backups
+  
+  mysql:
+    image: mysql
     environment:
-      - POSTGRES_USER={{cookiecutter.project_slug}}
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpassword
+      MYSQL_ROOT_PASSWORD: dbrootpassword
+      MYSQL_DATABASE: dbdatabase
+    volumes_from:
+      - datastore
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - '8081:80'
+
+  datastore:
+    image: busybox
+    volumes:
+      - /var/lib/mysql 
 
   django:
     build:
@@ -21,26 +39,12 @@ services:
     depends_on:
       - postgres{% if cookiecutter.use_mailhog == 'y' %}
       - mailhog{% endif %}
-    environment:
-      - POSTGRES_USER={{cookiecutter.project_slug}}
-      - USE_DOCKER=yes
+    links:
+      - mysql
     volumes:
       - .:/app
     ports:
-      - "8000:8000"
-
-{% if cookiecutter.use_pycharm == 'y' %}
-  pycharm:
-    build:
-      context: .
-      dockerfile: ./compose/django/Dockerfile-dev
-    depends_on:
-      - postgres
-    environment:
-      - POSTGRES_USER={{cookiecutter.project_slug}}
-    volumes:
-      - .:/app
-{% endif %}
+      - "8080:8080"
 
 {% if cookiecutter.use_mailhog == 'y' %}
   mailhog:
