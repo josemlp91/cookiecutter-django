@@ -63,4 +63,10 @@ django-compressor==2.1.1
 
 # Mysql
 setuptools
-mysqlclient
+mysqlclient==1.3.10
+
+# DjangoRest
+
+{% if cookiecutter.use_djangorest == "y" %}
+djangorestframework==3.6.2
+{% endif %}

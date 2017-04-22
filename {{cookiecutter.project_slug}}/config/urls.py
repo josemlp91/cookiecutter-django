@@ -5,6 +5,11 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
+{% if cookiecutter.use_swagger == 'y' %}
+from rest_framework_swagger.views import get_swagger_view
+schema_view = get_swagger_view(title='API Documentation')
+{% endif %}
+
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
@@ -20,6 +25,11 @@ urlpatterns = [
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+{% if cookiecutter.use_swagger == 'y' %}
+urlpatterns += [url(r'^$', schema_view)]
+{% endif %}
+
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

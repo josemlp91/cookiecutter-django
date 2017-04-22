@@ -292,6 +292,23 @@ else:
 ########## END CELERY
 {% endif %}
 
+
+{% if cookiecutter.use_djangorest == 'y' %}
+INSTALLED_APPS += ['rest_framework']
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'PAGE_SIZE': 10
+}
+{% endif %}
+
+{% if cookiecutter.use_swagger == 'y' %}
+INSTALLED_APPS += ['rest_framework_swagger']
+{% endif %}
+
+
+
 {%- if cookiecutter.use_compressor == 'y'-%}
 # django-compressor
 # ------------------------------------------------------------------------------
