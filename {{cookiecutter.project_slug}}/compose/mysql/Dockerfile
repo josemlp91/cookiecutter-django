@@ -1,1 +1,1 @@
-FROM mysql:{{ cookiecutter.postgresql_version }}
+FROM mysql:{{ cookiecutter.mysql_version }}
