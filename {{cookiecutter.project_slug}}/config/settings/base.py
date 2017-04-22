@@ -109,6 +109,9 @@ MANAGERS = ADMINS
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
+
+
+{% if cookiecutter.use_mysql == 'y' %}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
@@ -119,6 +122,13 @@ DATABASES = {
         'PORT': os.environ.get("MYSQL_PORT"),
     }
 }
+{% endif %}
+
+{% if cookiecutter.use_posgres == 'y' %}
+DATABASES = {
+    'default': env.db('DATABASE_URL', default='postgres://{% if cookiecutter.windows == 'y' %}localhost{% endif %}/{{cookiecutter.project_slug}}'),
+}
+{% endif %}
 
 
 # GENERAL CONFIGURATION
