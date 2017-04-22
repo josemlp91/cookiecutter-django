@@ -6,7 +6,7 @@ volumes:
 
 services:
   {% if cookiecutter.use_mysql == 'y' %}mysql:
-    build: ./compose/mysql
+    image: mysql
     volumes_from:
       - datastore
     env_file: env.dev
