@@ -41,15 +41,15 @@ services:
 
   django:
     build:
-      context: 
+      context: .
       dockerfile: ./compose/django/Dockerfile-dev
     command: /start-dev.sh
     environment: 
       {% if cookiecutter.use_mysql == 'y' %}
       MYSQL_HOST: mysql{% endif %}
       {% if cookiecutter.use_postgres == 'y' %}
-      POSTGRES_USER={{cookiecutter.project_slug}}{% endif %}
-      USE_DOCKER=yes
+      POSTGRES_USER:{{cookiecutter.project_slug}}{% endif %}
+      USE_DOCKER:yes
     env_file: env.dev
     depends_on:
       {% if cookiecutter.use_mysql == 'y' %}
