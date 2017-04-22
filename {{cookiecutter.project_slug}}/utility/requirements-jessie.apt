@@ -23,4 +23,5 @@ libwebp-dev
 graphviz-dev
 
 ## Mysql
+python2.7-mysqldb
 libmysqlclient-dev
