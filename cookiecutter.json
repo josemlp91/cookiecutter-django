@@ -21,7 +21,7 @@
     "use_elasticbeanstalk_experimental": "n",
     "use_compressor": "n",
     "use_mysql": "n",
-    "mysql_version": ["8.0", "5.7", "5.6", "5.5", "None"],
+    "mysql_version": ["5.7", "5.6", "5.5", "None"],
     "use_phpmyadmin": "n",
     "use_postgres": "n",
     "postgresql_version": ["9.6", "9.5", "9.4", "9.3", "9.2", "None"],
