@@ -10,6 +10,7 @@ services:
     image: mysql
     volumes_from:
       - datastore
+    env_file: .env.dev
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -33,7 +34,7 @@ services:
     command: /start-dev.sh
     environment:
       MYSQL_HOST: mysql
-    env_file: .env
+    env_file: .env.dev
     depends_on:
       - mysql{% if cookiecutter.use_mailhog == 'y' %}
       - mailhog{% endif %}
