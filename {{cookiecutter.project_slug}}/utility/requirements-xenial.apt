@@ -21,3 +21,6 @@ libwebp-dev
 
 ##django-extensions
 graphviz-dev
+
+## Mysql
+libmysqlclient-dev

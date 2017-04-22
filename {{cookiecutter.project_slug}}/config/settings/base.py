@@ -109,9 +109,15 @@ MANAGERS = ADMINS
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres://{% if cookiecutter.windows == 'y' %}localhost{% endif %}/{{cookiecutter.project_slug}}'),
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': os.environ.get("MYSQL_DATABASE"),
+        'USER': os.environ.get("MYSQL_USER"),
+        'PASSWORD': os.environ.get("MYSQL_PASSWORD"),
+        'HOST': os.environ.get("MYSQL_HOST"),
+        'PORT': os.environ.get("MYSQL_PORT"),
+    }
 }
-DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 
 # GENERAL CONFIGURATION
