@@ -37,7 +37,7 @@ services:
       dockerfile: ./compose/django/Dockerfile-dev
     command: /start-dev.sh
     depends_on:
-      - postgres{% if cookiecutter.use_mailhog == 'y' %}
+      - mysql{% if cookiecutter.use_mailhog == 'y' %}
       - mailhog{% endif %}
     links:
       - mysql
