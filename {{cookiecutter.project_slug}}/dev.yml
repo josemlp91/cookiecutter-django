@@ -31,21 +31,19 @@ services:
       PMA_HOST: mysql
       PMA_PORT: 3306
     ports:
-      - '8081:80'{% endif %}    
+      - '8081:80'
+  {% endif %}    
+  
   django:
     build:
       context: .
       dockerfile: ./compose/django/Dockerfile-dev
     command: /start-dev.sh
-    environment: 
-      {% if cookiecutter.use_mysql == 'y' %}MYSQL_HOST: mysql{% endif %}
-      {% if cookiecutter.use_postgres == 'y' %}POSTGRES_USER:{{cookiecutter.project_slug}}{% endif %}
-      USE_DOCKER:yes
+    environment:
+      MYSQL_HOST: mysql
     env_file: env.dev
     depends_on:
-      {% if cookiecutter.use_mysql == 'y' %}- mysql {% endif %}
-      {% if cookiecutter.use_postgres == 'y' %}- postgres {% endif %}
-      {% if cookiecutter.use_mailhog == 'y' %}- mailhog {% endif %}
+      - mysql
     links:
       - mysql
     volumes:
