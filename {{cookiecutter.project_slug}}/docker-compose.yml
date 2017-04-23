@@ -91,7 +91,7 @@ services:
     env_file: env.prod
     depends_on: {% if cookiecutter.use_mysql == 'y' %}
       - mysql {% endif %} {% if cookiecutter.use_postgres == 'y' %}
-      - postgres {% endif %} {% if cookiecutter.use_mysql == 'y' %}
+      - postgres {% endif %} 
       - redis
     command: celery -A {{cookiecutter.project_slug}}.taskapp beat -l INFO
 {% endif %}
