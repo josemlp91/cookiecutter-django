@@ -56,7 +56,7 @@ import pymysql.cursors
 try:
 	cnx = pymysql.connector.connect(user='$MYSQL_USER', password='$MYSQL_PASSWORD',
                               host='mysql',
-                              db='MYSQL_DATABASE', cursorclass=pymysql.cursors.DictCursor)
+                              db='$MYSQL_DATABASE', cursorclass=pymysql.cursors.DictCursor)
     
 except:
     sys.exit(-1)
