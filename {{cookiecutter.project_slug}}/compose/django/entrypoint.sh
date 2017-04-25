@@ -51,13 +51,14 @@ exec $cmd
 function mysql_ready(){
 python << END
 import sys
-import mysql.connector
+import pymysql.cursors
+
 try:
-	cnx = mysql.connector.connect(user='$MYSQL_USER', password='$MYSQL_PASSWORD',
+	cnx = pymysql.connector.connect(user='$MYSQL_USER', password='$MYSQL_PASSWORD',
                               host='mysql',
-                              database='MYSQL_DATABASE')
+                              db='MYSQL_DATABASE', cursorclass=pymysql.cursors.DictCursor)
     
-except mysql.connector.Error as err:
+except:
     sys.exit(-1)
 sys.exit(0)
 END
