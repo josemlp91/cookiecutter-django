@@ -57,7 +57,7 @@ try:
                               host='mysql',
                               database='MYSQL_DATABASE')
     
-except mysql.connector.Error as err::
+except mysql.connector.Error as err:
     sys.exit(-1)
 sys.exit(0)
 END
