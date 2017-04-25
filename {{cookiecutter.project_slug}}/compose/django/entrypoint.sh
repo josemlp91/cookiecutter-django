@@ -8,6 +8,12 @@ cmd="$@"
 # does all this for us.
 export REDIS_URL=redis://redis:6379
 
+
+{% if cookiecutter.use_celery == 'y' %}
+export CELERY_BROKER_URL=$REDIS_URL/0
+{% endif %}
+
+
 {% if cookiecutter.use_postgres == 'y' %}
 
 # the official postgres image uses 'postgres' as default user if not set explictly.
@@ -16,9 +22,6 @@ if [ -z "$POSTGRES_USER" ]; then
 fi
 
 export DATABASE_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_USER
-{% if cookiecutter.use_celery == 'y' %}
-export CELERY_BROKER_URL=$REDIS_URL/0
-{% endif %}
 
 function postgres_ready(){
 python << END
@@ -39,5 +42,35 @@ done
 
 >&2 echo "Postgres is up - continuing..."
 exec $cmd
+
+{% endif %}
+
+{% if cookiecutter.use_mysql == 'y' %}
+
+
+function mysql_ready(){
+python << END
+import sys
+import mysql.connector
+try:
+	cnx = mysql.connector.connect(user='$MYSQL_USER', password='$MYSQL_PASSWORD',
+                              host='mysql',
+                              database='MYSQL_DATABASE')
+    
+except mysql.connector.Error as err::
+    sys.exit(-1)
+sys.exit(0)
+END
+}
+
+
+until mysql_ready; do
+  >&2 echo "Mysql is unavailable - sleeping"
+  sleep 1
+done
+
+>&2 echo "Mysql is up - continuing..."
+exec $cmd
+
 
 {% endif %}
