@@ -40,6 +40,8 @@ services:
       dockerfile: ./compose/django/Dockerfile-dev
     command: /wait.sh && /start-dev.sh
     env_file: env.dev
+    environment:
+      WAIT_HOSTS: mysql:3306
     depends_on: {% if cookiecutter.use_mysql == 'y' %}
       - mysql {% endif %} {% if cookiecutter.use_postgres == 'y' %}
       - postgres {% endif %} {% if cookiecutter.use_mysql == 'y' %}
